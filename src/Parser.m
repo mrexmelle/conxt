@@ -58,9 +58,9 @@
     NSString * filename = [NSString stringWithFormat:@"%@.java", _enumName];
     
     // write the class
-    NSMutableString * javaContent = [NSMutableString string];
+    NSMutableString * content = [NSMutableString string];
     NSString * enumStart = [NSString stringWithFormat:@"public final class %@\n{\n", _enumName];
-    [javaContent appendString:enumStart];
+    [content appendString:enumStart];
     for(Line * l in _lineList)
     {
         NSString * enumLine;
@@ -76,12 +76,12 @@
         {
             enumLine = [NSString stringWithFormat:@"\tpublic final static int %@=%@;\n", l.key, l.value];
         }
-        [javaContent appendString:enumLine];
+        [content appendString:enumLine];
     }
     NSString * enumEnd = @"}\n";
-    [javaContent appendString:enumEnd];
+    [content appendString:enumEnd];
 
-    [javaContent writeToFile:filename atomically:false encoding:NSStringEncodingConversionAllowLossy error:NULL];
+    [content writeToFile:filename atomically:false encoding:NSStringEncodingConversionAllowLossy error:NULL];
 }
 
 - (void) writeToPy
@@ -90,9 +90,9 @@
     NSString * filename = [NSString stringWithFormat:@"%@.py", _enumName];
     
     // write the class
-    NSMutableString * javaContent = [NSMutableString string];
+    NSMutableString * content = [NSMutableString string];
     NSString * enumStart = [NSString stringWithFormat:@"class %@(object):\n", _enumName];
-    [javaContent appendString:enumStart];
+    [content appendString:enumStart];
     for(Line * l in _lineList)
     {
         NSString * enumLine;
@@ -108,12 +108,52 @@
         {
             enumLine = [NSString stringWithFormat:@"\t%@=%@\n", l.key, l.value];
         }
-        [javaContent appendString:enumLine];
+        [content appendString:enumLine];
     }
     NSString * enumEnd = @"\n";
-    [javaContent appendString:enumEnd];
+    [content appendString:enumEnd];
     
-    [javaContent writeToFile:filename atomically:false encoding:NSStringEncodingConversionAllowLossy error:NULL];
+    [content writeToFile:filename atomically:false encoding:NSStringEncodingConversionAllowLossy error:NULL];
+}
+
+- (void) writeToCpp
+{
+    // set the file name
+    NSString * filename = [NSString stringWithFormat:@"%@.h", _enumName];
+    
+    NSString * upperCaseEnumName = [_enumName uppercaseString];
+    
+    // write the class
+    NSMutableString * content = [NSMutableString string];
+    NSString * enumHeader = [NSString stringWithFormat:@"#ifndef __%@_H__\n#define __%@_H__\n\n",
+                             upperCaseEnumName, upperCaseEnumName];
+    [content appendString:enumHeader];
+    NSString * enumStart = [NSString stringWithFormat:@"class %@\n{\n", _enumName];
+    [content appendString:enumStart];
+    for(Line * l in _lineList)
+    {
+        NSString * enumLine;
+        if([l.type isEqualToString:@"comment"])
+        {
+            enumLine = [NSString stringWithFormat:@"\t// %@\n", l.value];
+        }
+        else if([l.type isEqualToString:@"lf"])
+        {
+            enumLine = @"\n";
+        }
+        else
+        {
+            enumLine = [NSString stringWithFormat:@"\tstatic const int %@=%@;\n", l.key, l.value];
+        }
+        [content appendString:enumLine];
+    }
+    NSString * enumEnd = @"};\n\n";
+    [content appendString:enumEnd];
+    
+    NSString * enumFooter = [NSString stringWithFormat:@"#endif // __%@_H__\n", upperCaseEnumName];
+    [content appendString:enumFooter];
+    
+    [content writeToFile:filename atomically:false encoding:NSStringEncodingConversionAllowLossy error:NULL];
 }
 
 - (void) parseToJava: (NSString *)aFilename
@@ -126,6 +166,12 @@
 {
     [self parse:aFilename];
     [self writeToPy];
+}
+
+- (void) parseToCpp: (NSString *)aFilename
+{
+    [self parse:aFilename];
+    [self writeToCpp];
 }
 
 - (void)parserDidStartDocument:(NSXMLParser *)parser

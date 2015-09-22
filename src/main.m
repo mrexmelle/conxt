@@ -60,6 +60,10 @@ int main(int argc, char * argv [])
         {
             [p parseToPy:filename];
         }
+        else if(strcasecmp(targetLang, "c++")==0)
+        {
+            [p parseToCpp:filename];
+        }
     }
     
 	return 0;

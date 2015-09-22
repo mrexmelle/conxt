@@ -1,0 +1,9 @@
+
+<enum name="ErrorConstants">
+    <line type="comment" value="Status OK" />
+	<line type="const" key="OK" value="1001" />
+    <line type="lf" />
+	<line type="const" key="REGISTRATION_DATA_INVALID" value="2001" />
+	<line type="const" key="USERNAME_PASSWORD_INVALID" value="2002" />
+	<line type="const" key="EMAIL_ALREADY_REGISTERED" value="2003" />
+</enum>

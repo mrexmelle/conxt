@@ -128,7 +128,7 @@
     NSString * enumHeader = [NSString stringWithFormat:@"#ifndef __%@_H__\n#define __%@_H__\n\n",
                              upperCaseEnumName, upperCaseEnumName];
     [content appendString:enumHeader];
-    NSString * enumStart = [NSString stringWithFormat:@"class %@\n{\n", _enumName];
+    NSString * enumStart = [NSString stringWithFormat:@"class %@\n{\n\tpublic:\n", _enumName];
     [content appendString:enumStart];
     for(Line * l in _lineList)
     {

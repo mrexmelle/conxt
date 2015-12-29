@@ -64,6 +64,10 @@ int main(int argc, char * argv [])
         {
             [p parseToCpp:filename];
         }
+	else
+	{
+	    NSLog(@"Target language unsupported.\n");
+	}
     }
     
 	return 0;

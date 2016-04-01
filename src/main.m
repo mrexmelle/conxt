@@ -48,6 +48,7 @@ int main(int argc, char * argv [])
     
     // for target-lang variable
     char * targetLang=(char*)(malloc(256));
+    memset(targetLang, 0x0, 256);
         
     while(1)
     {
@@ -75,6 +76,11 @@ int main(int argc, char * argv [])
             strcpy(targetLang, optarg);
             break;
         }
+    }
+    
+    if(strcmp(targetLang, "")==0)
+    {
+        return -2;
     }
     
     @autoreleasepool

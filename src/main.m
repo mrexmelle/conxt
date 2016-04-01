@@ -80,6 +80,7 @@ int main(int argc, char * argv [])
     
     if(strcmp(targetLang, "")==0)
     {
+        free(targetLang);
         return -2;
     }
     
@@ -105,6 +106,8 @@ int main(int argc, char * argv [])
             printf("%s: Target language unsupported.\n", gAppName);
         }
     }
+    
+    free(targetLang);
     
 	return 0;
 }

@@ -9,6 +9,10 @@ Download the source code:
 
 	git clone https://github.com/mrexmelle/conxt
 
+Enter conxt directory
+
+	cd conxt
+
 Compile and install it:
 	
 	make install

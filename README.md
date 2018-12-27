@@ -1,5 +1,6 @@
 
 [![Build Status](https://travis-ci.org/mrexmelle/conxt.svg?branch=master)](https://travis-ci.org/mrexmelle/conxt)
+[![CodeFactor](https://www.codefactor.io/repository/github/mrexmelle/conxt/badge)](https://www.codefactor.io/repository/github/mrexmelle/conxt)
 
 # Description
 Conxt is a mini-tool to generate a list of constants from an XML file.
